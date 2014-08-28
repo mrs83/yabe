@@ -21,12 +21,10 @@
         <p>{{ post.content|linebreaksbr }}</p>
         <i>by {{ post.author }}</i>
         <p>
-          {% if user.is_authenticated %}
-          {% if user.is_superuser or user == post.author %}
+          {% if user == post.author %}
           <a href="{% url "post_update" post.id %}" type="submit" class="btn btn-primary">
             {% bootstrap_icon "star" %} Edit Post
           </a>
-          {% endif %}
           {% endif %}
         </p>
       </div>
@@ -34,7 +32,9 @@
   {% empty %}
   <p>No Posts Avaialable</p>
   {% endfor %}
+  {% if is_paginated %}
   {% bootstrap_pagination page_obj size="large" %}
+  {% endif %}
   </div>
 </div>
 {% endblock %}
