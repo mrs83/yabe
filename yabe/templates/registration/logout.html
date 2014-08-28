@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <h1>Logout</h1>
+  <p class="lead">You are now logged out.</p>
+  <p><a href="{% url 'post_list' %}">Home</a></p>
+{% endblock %}

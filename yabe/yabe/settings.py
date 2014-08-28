@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'categories.editor',
     'braces',
     'bootstrap3',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (

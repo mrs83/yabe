@@ -1,3 +1,13 @@
 {% extends 'bootstrap3/bootstrap3.html' %}
 
+{% block bootstrap3_extra_head %}
+{% block extra_css %}
+<style>
+body {
+  padding-top: 50px;
+}
+</style>
+{% endblock %}
+{% block extra_js %}{% endblock %}
+{% endblock %}
 {% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block content-main %}
+<div class="panel panel-default">
+    <div class="panel-heading">Create Post</div>
+    <div class="panel-body">
+      <form action="{% url "post_create" %}" method="post" class="form" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+      <button type="submit" class="btn btn-primary">
+          {% bootstrap_icon "star" %} Save
+      </button>
+      {% endbuttons %}
+      </form>
+    </div>
+</div>
+{% endblock %}
