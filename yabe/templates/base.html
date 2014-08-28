@@ -18,10 +18,10 @@
       <ul class="nav navbar-nav">
         <li><a href="{% url "post_list" %}">Home</a></li>
         {% if user.is_authenticated %}
+        <li><a href="{% url "django.contrib.auth.views.logout" %}">Logout</a></li>
+        {% else %}
         <li><a href="{% url "django.contrib.auth.views.login" %}">Login</a></li>
         <li><a href="{% url 'registration_register' %}">Register</a></li>
-        {% else %}
-        <li><a href="{% url "django.contrib.auth.views.logout" %}">Logout</a></li>
         {% endif %}
       </ul>
     </div><!--/.nav-collapse -->
