@@ -1,0 +1,14 @@
+{% extends 'bootstrap.html' %}
+
+{% load bootstrap3 %}
+
+{% block bootstrap3_content %}
+<div class="container">
+    <h1>{% block title %}Yet Another Blog Engine{% endblock %}</h1>
+    <p>
+        <a href="{% url "post_list" %}">home</a>
+    </p>
+    {% bootstrap_messages %}
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+Django==1.6.6
+South==1.0
+django-bootstrap3==4.11.0
+django-braces==1.4.0
+-e git+https://github.com/callowayproject/django-categories.git@a4c9e709508d193af4ee3596e6340ea08573a254#egg=django_categories-dev
+django-mptt==0.6.1
+six==1.7.3
+unicode-slugify==0.1.1
+wsgiref==0.1.2

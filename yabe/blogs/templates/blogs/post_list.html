@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% load bootstrap3 %}
+
+{% block title %}Posts - {{ block.super }}{% endblock %}
+
+{% block content %}
+{% with post_list.count as post_count %}
+{% if post_count %}
+{% for post in post_list %}
+<div class="panel panel-default">
+  <div class="panel-heading">"{{ post.title }}" <i>{{ post.created|date:"m/d/Y H:i" }}</i></div>
+  <div class="panel-body">
+    <p>{{ post.content|linebreaksbr }}</p>
+    <i>by {{ post.author }}</i>
+  </div>
+</div>
+{% empty %}
+{% endfor %}
+{% bootstrap_pagination page_obj size="large" %}
+{% else %}
+<p>No Posts Avaialable</p>
+{% endif %}
+{% endwith %}
+{% endblock %}
