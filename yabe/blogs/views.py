@@ -22,23 +22,30 @@ class AuthorRequiredMixin(object):
         return obj
 
 
-class PostCreate(AuthorRequiredMixin, StaffuserRequiredMixin, CreateView):
+class PostAuthorMixin(object):
+    def form_valid(self, form):
+         user = self.request.user
+         form.instance.author = user
+         return super(PostAuthorMixin, self).form_valid(form)
+
+
+class PostCreate(AuthorRequiredMixin, PostAuthorMixin, StaffuserRequiredMixin, CreateView):
     model = Post
     success_url = reverse_lazy('post_list')
     template_name = 'blogs/post_create.html'
     form_class = PostForm
 
 
-class PostUpdate(AuthorRequiredMixin, StaffuserRequiredMixin, UpdateView):
+class PostUpdate(AuthorRequiredMixin, PostAuthorMixin, StaffuserRequiredMixin, UpdateView):
     model = Post
-    success_url = reverse_lazy('articolo_list')
+    success_url = reverse_lazy('post_list')
     template_name = 'blogs/post_update.html'
     form_class = PostForm
 
 
 class PostDelete(AuthorRequiredMixin, StaffuserRequiredMixin, DeleteView):
     model = Post
-    success_url = reverse_lazy('articolo_list')
+    success_url = reverse_lazy('post_list')
 
 
 class PostList(ListView):

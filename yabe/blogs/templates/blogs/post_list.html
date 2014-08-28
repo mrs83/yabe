@@ -5,21 +5,41 @@
 {% block content_title %}<h2>Blog Posts</h2>{% endblock %}
 
 {% block content %}
-{% with post_list.count as post_count %}
-{% if post_count %}
-{% for post in post_list %}
-<div class="panel panel-default">
-  <div class="panel-heading">"{{ post.title }}" <i>{{ post.created|date:"m/d/Y H:i" }}</i></div>
-  <div class="panel-body">
-    <p>{{ post.content|linebreaksbr }}</p>
-    <i>by {{ post.author }}</i>
+<div class="row">
+  {% if user.is_authenticated %}
+  <div class="col-sm-2">
+    <a href="{% url "post_create" %}" type="submit" class="btn btn-primary">
+        {% bootstrap_icon "star" %} Add Post
+    </a>
+  </div>
+  {% endif %}
+  <div class="col-sm-10">
+  {% with post_list.count as post_count %}
+  {% if post_count %}
+  {% for post in post_list %}
+    <div class="panel panel-default">
+      <div class="panel-heading">"{{ post.title }}" <i>{{ post.created|date:"m/d/Y H:i" }}</i></div>
+      <div class="panel-body">
+        <p>{{ post.content|linebreaksbr }}</p>
+        <i>by {{ post.author }}</i>
+        <p>
+          {% if user.is_authenticated %}
+          {% if user.is_superuser or user == post.author %}
+          <a href="{% url "post_update" post.id %}" type="submit" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Edit Post
+          </a>
+          {% endif %}
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  {% empty %}
+  {% endfor %}
+  {% bootstrap_pagination page_obj size="large" %}
+  {% else %}
+  <p>No Posts Avaialable</p>
+  {% endif %}
+  {% endwith %}
   </div>
 </div>
-{% empty %}
-{% endfor %}
-{% bootstrap_pagination page_obj size="large" %}
-{% else %}
-<p>No Posts Avaialable</p>
-{% endif %}
-{% endwith %}
 {% endblock %}
