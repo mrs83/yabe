@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.core.urlresolvers import reverse_lazy
@@ -9,21 +10,33 @@ from .models import Post
 from .forms import PostForm
 
 
-class PostCreate(StaffuserRequiredMixin, CreateView):
+class AuthorRequiredMixin(object):
+    author_field = 'author'
+
+    def get_object(self, *args, **kwargs):
+        obj = super(AuthorRequiredMixin, self).get_object(*args, **kwargs)
+        if self.request.user.is_superuser: # superusers can edit everything
+            return obj
+        if not getattr(obj, self.author_field) == self.request.user:
+            raise Http404
+        return obj
+
+
+class PostCreate(AuthorRequiredMixin, StaffuserRequiredMixin, CreateView):
     model = Post
     success_url = reverse_lazy('post_list')
     template_name = 'blogs/post_create.html'
     form_class = PostForm
 
 
-class PostUpdate(StaffuserRequiredMixin, UpdateView):
+class PostUpdate(AuthorRequiredMixin, StaffuserRequiredMixin, UpdateView):
     model = Post
     success_url = reverse_lazy('articolo_list')
     template_name = 'blogs/post_update.html'
     form_class = PostForm
 
 
-class PostDelete(StaffuserRequiredMixin, DeleteView):
+class PostDelete(AuthorRequiredMixin, StaffuserRequiredMixin, DeleteView):
     model = Post
     success_url = reverse_lazy('articolo_list')
 
